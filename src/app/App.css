@@ -1,0 +1,15 @@
+.header {
+  background-color: #1f1f22;
+  color: #fff;
+
+  display: grid;
+  height: 70px;
+  grid-template-columns: auto auto;
+  grid-column-gap: 30px;
+  align-items: center;
+  padding: 0 130px;
+}
+
+.header--title {
+  margin: 0;
+}
