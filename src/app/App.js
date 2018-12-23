@@ -6,10 +6,10 @@ import PhotoList from '../photo/PhotoList';
 class App extends Component {
 	render() {
 		return (
-			<React.Fragment>
-				<Header />
+			<div className="app">
+				<Header currentPath={this.props.location.pathname}/>
 				<PhotoList />
-			</React.Fragment>
+			</div>
 		);
 	}
 }

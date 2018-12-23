@@ -1,10 +1,20 @@
 import React from 'react';
+import PhotoSearchBar from '../photo/PhotoSearchBar';
+import history from './history';
 
-const Header = () => {
+const Header = ({ currentPath }) => {
+	function loadHomePage() {
+		if (currentPath !== '/') {
+			history.push('/');
+		} else {
+			window.location.reload();
+		}
+	}
+
 	return (
 		<header className="header">
-			<h1 className="header--title">Flickr Photos</h1>
-			<h2>Other text</h2>
+			<h1 className="header--title" onClick={loadHomePage}>Flickr Photos</h1>
+			<PhotoSearchBar />
 		</header>
 	);
 }

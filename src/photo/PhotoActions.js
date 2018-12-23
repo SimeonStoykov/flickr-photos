@@ -2,42 +2,43 @@ import { config } from '../config';
 export const FETCH_PHOTOS_BEGIN = 'FETCH_PHOTOS_BEGIN';
 export const FETCH_PHOTOS_SUCCESS = 'FETCH_PHOTOS_SUCCESS';
 export const FETCH_PHOTOS_FAILURE = 'FETCH_PHOTOS_FAILURE';
+export const SET_SEARCH_INPUT_VALUE = 'SET_SEARCH_INPUT_VALUE';
+export const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 
-export const fetchPhotosBegin = () => ({
-    type: FETCH_PHOTOS_BEGIN
+export const fetchPhotosBegin = loadMorePhotos => ({
+    type: FETCH_PHOTOS_BEGIN,
+    loadMorePhotos
 });
 
-export const fetchPhotosSuccess = photosResp => ({
+export const fetchPhotosSuccess = ({ photosResp, loadMorePhotos }) => ({
     type: FETCH_PHOTOS_SUCCESS,
-    payload: photosResp
+    payload: photosResp,
+    loadMorePhotos
 });
 
-export const fetchPhotosFailure = error => ({
+export const fetchPhotosFailure = ({ error, loadMorePhotos }) => ({
     type: FETCH_PHOTOS_FAILURE,
-    payload: { error }
+    payload: { error },
+    loadMorePhotos
 });
 
-export const fetchPhotos = params => {
-    const { page, resultsPerPage, searchTerm } = params;
-    const apiKey = '9098edcf1042f4c9445e4f63e75a840e';
-    let fetchUrl = config.flickrApiBaseUrl;
-
-    if (searchTerm) { // Search for photos with the provided searchTerm
-        fetchUrl += `?method=flickr.photos.search&api_key=${apiKey}&text=${searchTerm}&extras=tags%2Cdescription&per_page=${resultsPerPage}&page=${page}&format=json&nojsoncallback=1`;
-    } else { // Search for the recent photos
-        fetchUrl += `?method=flickr.photos.getRecent&api_key=${apiKey}&extras=tags%2Cdescription&per_page=${resultsPerPage}&page=${page}&format=json&nojsoncallback=1`;
-    }
+export const fetchPhotos = (params) => {
+    let { currentPage, searchTerm, loadMorePhotos } = params;
+    let textParam = searchTerm ? `&text=${searchTerm}` : '';
+    const fetchUrl = config.flickrSearchPhotosUrl + textParam +
+        `&max_upload_date=${+ new Date()}&safe_search=1&extras=tags%2Cdescription%2Cowner_name&page=${currentPage}&per_page=${config.resultsPerPage}&format=json&nojsoncallback=1`;
 
     return dispatch => {
-        dispatch(fetchPhotosBegin());
+        dispatch(fetchPhotosBegin(loadMorePhotos));
 
         return fetch(fetchUrl)
             .then(handleErrors)
             .then(res => res.json())
             .then(json => {
-                return dispatch(fetchPhotosSuccess(json));
+                return dispatch(fetchPhotosSuccess({ photosResp: json, loadMorePhotos }));
             })
-            .catch(error => dispatch(fetchPhotosFailure(error)));
+            .catch(error => dispatch(fetchPhotosFailure({ error, loadMorePhotos })));
     };
 }
 
@@ -47,3 +48,25 @@ function handleErrors(response) {
     }
     return response;
 }
+
+export const setSearchInputValue = value => ({
+    type: SET_SEARCH_INPUT_VALUE,
+    value
+});
+
+export const setSearchTerm = value => dispatch => {
+    dispatch({
+        type: SET_SEARCH_TERM,
+        value
+    });
+
+    return Promise.resolve();
+};
+
+export const setCurrentPage = () => dispatch => {
+    dispatch({
+        type: SET_CURRENT_PAGE
+    });
+
+    return Promise.resolve();
+};

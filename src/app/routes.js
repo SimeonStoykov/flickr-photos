@@ -1,15 +1,15 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import App from './App';
-// import AssetDetails from './components/AssetDetails/AssetDetails';
+import history from './history';
 
 export default () => {
 	return (
-		<BrowserRouter basename={process.env.PUBLIC_URL}>
+		<Router basename={process.env.PUBLIC_URL} history={history}>
 			<Switch>
-				<Route exact path="/" render={routeProps => <App {...routeProps} />} />
+				<Route exact path="/" component={App} />} />
 				{/* <Route path="/asset/:id" render={routeProps => <AssetDetails {...routeProps} />} /> */}
 			</Switch>
-		</BrowserRouter>
+		</Router>
 	);
 };
