@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import {
     fetchPhotos,
     setSearchInputValue,
-    setSearchTerm
+    setSearchTerm,
+    setCurrentPage
 } from '../photo/PhotoActions';
 
 export class PhotoSearchBar extends Component {
@@ -13,23 +14,31 @@ export class PhotoSearchBar extends Component {
         super();
         this.searchPhotos = this.searchPhotos.bind(this);
         this.handleSearchInputValueChange = this.handleSearchInputValueChange.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     handleSearchInputValueChange(e) {
         this.props.setSearchInputValue(e.target.value);
     }
 
+    handleKeyPress(e) {
+        if (e.key === 'Enter' && this.props.searchInputValue) {
+            this.searchPhotos();
+        }
+    }
+
     searchPhotos() {
-        let { setSearchTerm, searchInputValue, fetchPhotos } = this.props;
+        let { setCurrentPage, setSearchTerm, searchInputValue, fetchPhotos } = this.props;
         const newSearchTerm = searchInputValue.trim();
         setSearchTerm(newSearchTerm);
-        fetchPhotos({ currentPage: 1, searchTerm: newSearchTerm, loadMorePhotos: false });
+        setCurrentPage(1);
+        fetchPhotos({ currentPage: 1, searchTerm: newSearchTerm });
     }
 
     render() {
         return (
-            <div>
-                <input type="text" value={this.props.searchInputValue} onChange={this.handleSearchInputValueChange} />
+            <div className="header--search-bar">
+                <input type="text" value={this.props.searchInputValue} onChange={this.handleSearchInputValueChange} onKeyPress={this.handleKeyPress} />
                 <button onClick={this.searchPhotos} disabled={!this.props.searchInputValue}>Search</button>
             </div>
         );
@@ -40,6 +49,7 @@ PhotoSearchBar.propTypes = {
     fetchPhotos: PropTypes.func,
     searchTerm: PropTypes.string,
     setSearchTerm: PropTypes.func,
+    setCurrentPage: PropTypes.func,
     currentPage: PropTypes.number
 };
 
@@ -55,7 +65,8 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchPhotos: dataUrl => dispatch(fetchPhotos(dataUrl)),
         setSearchInputValue: value => dispatch(setSearchInputValue(value)),
-        setSearchTerm: value => dispatch(setSearchTerm(value))
+        setSearchTerm: value => dispatch(setSearchTerm(value)),
+        setCurrentPage: value => dispatch(setCurrentPage(value))
     };
 };
 

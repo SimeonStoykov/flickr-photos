@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Photo from './Photo';
 import './Photo.css';
-import InfiniteScroll from 'react-infinite-scroller';
+import Loading from '../shared/Loading/Loading';
 
 import {
 	fetchPhotos,
@@ -22,38 +22,31 @@ export class PhotoList extends Component {
 					return;
 				}
 
-				setCurrentPage();
-				fetchPhotos({ currentPage: currentPage + 1, searchTerm, loadMorePhotos: true });
+				setCurrentPage(currentPage + 1);
+				fetchPhotos({ currentPage: currentPage + 1, searchTerm });
 			}
 		};
 	}
 
 	componentDidMount() {
 		let { fetchPhotos, searchTerm } = this.props;
-		fetchPhotos({ currentPage: 1, searchTerm, loadMorePhotos: false });
+		fetchPhotos({ currentPage: 1, searchTerm });
 	}
 
 	render() {
-		const { fetchPhotos, photos, fetchPhotosLoading, fetchPhotosError, fetchMorePhotosLoading, fetchMorePhotosError, searchTerm, currentPage, totalPages } = this.props;
-
-		if (fetchPhotosError) {
-			return <div>Error! {fetchPhotosError.message}</div>;
-		}
-
-		if (fetchPhotosLoading) {
-			return <div>Loading...</div>;
-		}
+		const { photos, fetchPhotosLoading, fetchPhotosError, searchTerm, currentPage, totalPages } = this.props;
 
 		return (
 			<React.Fragment>
-				{searchTerm && <div>Results for: {searchTerm}</div>}
-				{totalPages && <div>Total pages: {totalPages}</div>}
+				{searchTerm && photos.length > 0 && !fetchPhotosLoading && <div>Results for: {searchTerm}</div>}
+				<div>Total pages: {totalPages}</div>
 				<div className="photos-list">
+					{photos.length === 0 && !fetchPhotosLoading ? <div className="photo-list--no-results">No results found!</div> : ''}
 					{photos.map(photo => <Photo key={photo.id} data={photo} />)}
-					{fetchMorePhotosLoading && <div>Loading...</div>}
-					{fetchMorePhotosError && <div>Error! {fetchMorePhotosError.message}</div>}
+					{fetchPhotosLoading && <Loading />}
+					{fetchPhotosError && <div className="photo-list--error-message">Error! {fetchPhotosError.message}</div>}
+					{totalPages === currentPage && !fetchPhotosLoading && <div className="photo-list--no-results">No more results!</div>}
 				</div>
-				{totalPages === currentPage && <div>No more results!</div>}
 			</React.Fragment>
 		);
 	}
@@ -73,8 +66,6 @@ const mapStateToProps = ({ photosData }) => {
 	return {
 		fetchPhotosLoading: photosData.get('fetchPhotosLoading'),
 		fetchPhotosError: photosData.get('fetchPhotosError'),
-		fetchMorePhotosLoading: photosData.get('fetchMorePhotosLoading'),
-		fetchMorePhotosError: photosData.get('fetchMorePhotosError'),
 		photos: photosData.get('photos').toJS(),
 		searchTerm: photosData.get('searchTerm'),
 		currentPage: photosData.get('currentPage'),
@@ -85,7 +76,7 @@ const mapStateToProps = ({ photosData }) => {
 const mapDispatchToProps = dispatch => {
 	return {
 		fetchPhotos: params => dispatch(fetchPhotos(params)),
-		setCurrentPage: () => dispatch(setCurrentPage())
+		setCurrentPage: value => dispatch(setCurrentPage(value))
 	};
 };
 

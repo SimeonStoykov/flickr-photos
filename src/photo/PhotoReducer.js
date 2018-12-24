@@ -16,50 +16,43 @@ const initialState = fromJS({
 	totalPages: 0,
 	fetchPhotosLoading: false,
 	fetchPhotosError: null,
-	fetchMorePhotosLoading: false,
-	fetchMorePhotosError: null,
 	photos: []
 });
 
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case FETCH_PHOTOS_BEGIN: {
-			let loadingVar = 'fetchPhotosLoading';
-			let errorVar = 'fetchPhotosError';
-
-			if (action.loadMorePhotos) {
-				loadingVar = 'fetchMorePhotosLoading';
-				errorVar = 'fetchMorePhotosError';
-			}
+			const photos = action.loadMorePhotos ? state.get('photos') : initialState.get('photos');
 
 			return state
-				.set(loadingVar, true)
-				.set(errorVar, initialState.get(errorVar));
+				.set('fetchPhotosLoading', true)
+				.set('fetchPhotosError', initialState.get('fetchPhotosError'))
+				.set('photos', photos);
 		}
 		case FETCH_PHOTOS_SUCCESS: {
-			let newPhotos = [];
+			let fetchedPhotos = [];
 			let totalPages = initialState.get('totalPages');
 
 			if (action.payload && action.payload.photos) {
-				action.payload.photos.photo && (newPhotos = action.payload.photos.photo);
+				action.payload.photos.photo && (fetchedPhotos = action.payload.photos.photo);
 				action.payload.photos.pages && (totalPages = action.payload.photos.pages);
 			}
 
-			newPhotos = newPhotos.map(photo => {
+			fetchedPhotos = fetchedPhotos.map(photo => {
 				photo.src = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`
 				return photo;
 			});
 
-			let photos = newPhotos;
+			let photos = fetchedPhotos;
 
-			if (action.loadMorePhotos) {
+			if (action.loadMorePhotos) { // Load more photos (add to the existing photos)
 				let currentPhotos = state.get('photos').toJS();
 
-				for (let i = 0; i < newPhotos.length; i++) {
-					let newPhoto = newPhotos[i];
-					let newPhotoAlreadyExists = currentPhotos.find((photo) => photo.id === newPhoto.id);
-					if (!newPhotoAlreadyExists) {
-						currentPhotos.push(newPhoto);
+				for (let i = 0; i < fetchedPhotos.length; i++) { // Add only unique photos
+					const fetchedPhoto = fetchedPhotos[i];
+					const fetchedPhotoAlreadyExists = currentPhotos.find((photo) => photo.id === fetchedPhoto.id);
+					if (!fetchedPhotoAlreadyExists) {
+						currentPhotos.push(fetchedPhoto);
 					}
 				}
 
@@ -67,22 +60,14 @@ export default (state = initialState, action) => {
 			}
 
 			return state
-				.set(action.loadMorePhotos ? 'fetchMorePhotosLoading' : 'fetchPhotosLoading', initialState.get('fetchPhotosLoading'))
+				.set('fetchPhotosLoading', initialState.get('fetchPhotosLoading'))
 				.set('photos', fromJS(photos))
 				.set('totalPages', totalPages);
 		}
 		case FETCH_PHOTOS_FAILURE: {
-			let loadingVar = 'fetchPhotosLoading';
-			let errorVar = 'fetchPhotosError';
-
-			if (action.loadMorePhotos) {
-				loadingVar = 'fetchMorePhotosLoading';
-				errorVar = 'fetchMorePhotosError';
-			}
-
 			return state
-				.set(loadingVar, initialState.get(loadingVar))
-				.set(errorVar, action.payload.error);
+				.set('fetchPhotosLoading', initialState.get('fetchPhotosLoading'))
+				.set('fetchPhotosError', action.payload.error);
 		}
 		case SET_SEARCH_INPUT_VALUE: {
 			return state.set('searchInputValue', action.value);
@@ -91,7 +76,7 @@ export default (state = initialState, action) => {
 			return state.set('searchTerm', action.value);
 		}
 		case SET_CURRENT_PAGE: {
-			return state.set('currentPage', state.get('currentPage') + 1);
+			return state.set('currentPage', action.value);
 		}
 		default:
 			return state;
