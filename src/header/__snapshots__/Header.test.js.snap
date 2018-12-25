@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header should render banner text correctly with given currentPath 1`] = `
+<header
+  className="header"
+>
+  <h1
+    className="header--title"
+    onClick={[Function]}
+  >
+    Flickr Photos
+  </h1>
+  <Connect(PhotoSearchBar) />
+</header>
+`;
+
+exports[`Header should render correctly with no props 1`] = `
+<header
+  className="header"
+>
+  <h1
+    className="header--title"
+    onClick={[Function]}
+  >
+    Flickr Photos
+  </h1>
+  <Connect(PhotoSearchBar) />
+</header>
+`;

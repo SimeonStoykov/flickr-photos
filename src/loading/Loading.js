@@ -1,5 +1,5 @@
 import React from 'react';
-import loading from '../../images/flickr-loading.svg';
+import loading from '../images/flickr-loading.svg';
 import './Loading.css';
 
 const Loading = () => {

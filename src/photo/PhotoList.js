@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Photo from './Photo';
 import './Photo.css';
-import Loading from '../shared/Loading/Loading';
+import Loading from '../loading/Loading';
+import LazyLoad from 'react-lazyload';
 
 import {
 	fetchPhotos,
@@ -37,17 +38,22 @@ export class PhotoList extends Component {
 		const { photos, fetchPhotosLoading, fetchPhotosError, searchTerm, currentPage, totalPages } = this.props;
 
 		return (
-			<React.Fragment>
-				{searchTerm && photos.length > 0 && !fetchPhotosLoading && <div>Results for: {searchTerm}</div>}
-				<div>Total pages: {totalPages}</div>
+			<main>
+				{searchTerm && photos.length > 0 && !fetchPhotosLoading && <div className="results-for">Results for "{searchTerm}"</div>}
 				<div className="photos-list">
-					{photos.length === 0 && !fetchPhotosLoading ? <div className="photo-list--no-results">No results found!</div> : ''}
-					{photos.map(photo => <Photo key={photo.id} data={photo} />)}
+					{photos.length === 0 && !fetchPhotosLoading ? <div className="photo-list--no-results">No results found for {searchTerm}</div> : ''}
+					{
+						photos.map(photo => (
+							<LazyLoad key={photo.id} height={300}>
+								<Photo data={photo} />
+							</LazyLoad>
+						))
+					}
 					{fetchPhotosLoading && <Loading />}
 					{fetchPhotosError && <div className="photo-list--error-message">Error! {fetchPhotosError.message}</div>}
 					{totalPages === currentPage && !fetchPhotosLoading && <div className="photo-list--no-results">No more results!</div>}
 				</div>
-			</React.Fragment>
+			</main>
 		);
 	}
 }

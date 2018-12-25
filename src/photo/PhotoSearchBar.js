@@ -38,8 +38,8 @@ export class PhotoSearchBar extends Component {
     render() {
         return (
             <div className="header--search-bar">
-                <input type="text" value={this.props.searchInputValue} onChange={this.handleSearchInputValueChange} onKeyPress={this.handleKeyPress} />
-                <button onClick={this.searchPhotos} disabled={!this.props.searchInputValue}>Search</button>
+                <input type="text" value={this.props.searchInputValue} onChange={this.handleSearchInputValueChange} onKeyPress={this.handleKeyPress} placeholder="Search in title, description and tags..." />
+                <button onClick={this.searchPhotos} disabled={!this.props.searchInputValue}></button>
             </div>
         );
     }

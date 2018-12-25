@@ -1,6 +1,7 @@
 import React from 'react';
 import PhotoSearchBar from '../photo/PhotoSearchBar';
-import history from './history';
+import history from '../app/history';
+import './Header.css';
 
 const Header = ({ currentPath }) => {
 	function loadHomePage() {

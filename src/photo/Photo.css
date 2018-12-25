@@ -2,20 +2,15 @@
     padding: 20px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 10px;
-    margin-top: 45px;
-
+    grid-gap: 15px;
     align-items: stretch;
 }
 
 .photos-list--card {
   padding: 10px;
-  border: 1px solid #999;
   border-radius: 5px;
   background: #fff;
-  margin-bottom: 1rem;
   word-wrap: break-word;
-
   border: 1px solid #ccc;
   box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
   max-width: 100%;
@@ -32,8 +27,21 @@
 .photo-list--error-message {
   text-align: center;
   grid-column: 1/-1;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .photo-list--error-message {
   color: red;
+}
+
+main {
+  margin-top: 60px;
+}
+
+.results-for {
+  padding: 20px;
+  padding-bottom: 0;
+  font-size: calc(14px + 0.5vw);
+  font-weight: bold;
 }

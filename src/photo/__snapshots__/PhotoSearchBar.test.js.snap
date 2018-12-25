@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Photo Search Bar should render correctly with no props 1`] = `
+<div
+  className="header--search-bar"
+>
+  <input
+    onChange={[Function]}
+    onKeyPress={[Function]}
+    placeholder="Search in title, description and tags..."
+    type="text"
+  />
+  <button
+    disabled={true}
+    onClick={[Function]}
+  />
+</div>
+`;
