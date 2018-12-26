@@ -28,7 +28,6 @@ export const fetchPhotos = (params) => {
     const currentUnixTimestamp = Math.round((new Date()).getTime() / 1000);
 
     const fetchUrl = `${config.flickrSearchPhotosURL}${textParam}&max_upload_date=${currentUnixTimestamp}&safe_search=1&extras=tags%2Cdescription%2Cowner_name&page=${currentPage}&per_page=${config.resultsPerPage}&format=json&nojsoncallback=1`;
-
     const loadMorePhotos = currentPage > 1;
 
     return dispatch => {

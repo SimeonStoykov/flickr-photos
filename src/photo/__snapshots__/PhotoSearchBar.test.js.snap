@@ -9,6 +9,7 @@ exports[`Photo Search Bar should render search bar correctly 1`] = `
     onKeyPress={[Function]}
     placeholder="Search in title, description and tags..."
     type="text"
+    value=""
   />
   <button
     disabled={true}

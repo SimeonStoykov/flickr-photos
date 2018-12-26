@@ -18,7 +18,7 @@ export class PhotoList extends Component {
 		window.onscroll = () => {
 			let { setCurrentPage, fetchPhotos, currentPage, searchTerm, totalPages } = this.props;
 
-			if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+			if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
 				if (totalPages === currentPage) {
 					return;
 				}
