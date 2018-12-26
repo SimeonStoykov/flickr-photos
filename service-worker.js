@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/flickr-photos/precache-manifest.7869c035145133a060863031e4bf76a4.js"
+  "/flickr-photos/precache-manifest.ca01863932d766edcd899b45648567d3.js"
 );
 
 workbox.clientsClaim();
