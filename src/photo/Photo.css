@@ -1,47 +1,49 @@
 .photos-list { 
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 15px;
-    align-items: stretch;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-gap: 15px;
+	align-items: stretch;
 }
 
 .photos-list--card {
-  padding: 10px;
-  border-radius: 5px;
-  background: #fff;
-  word-wrap: break-word;
-  border: 1px solid #ccc;
-  box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
-  max-width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	background: #fff;
+	word-wrap: break-word;
+	border: 1px solid #ccc;
+	box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
+	max-width: 100%;
 }
 
 .photos-list--card img {
-    max-width: 100%;
-    display: block;
-    margin: 0 auto;
-    max-height: 300px;
+	max-width: 100%;
+	display: block;
+	margin: 0 auto;
+	max-height: 300px;
 }
 
 .photo-list--no-results,
 .photo-list--error-message {
-  text-align: center;
-  grid-column: 1/-1;
-  font-size: 1.5rem;
-  font-weight: bold;
+	text-align: center;
+	grid-column: 1/-1;
+	font-size: 1.5rem;
+	font-weight: bold;
+	word-wrap: break-word;
 }
 
 .photo-list--error-message {
-  color: red;
-}
-
-main {
-  margin-top: 60px;
+	color: red;
 }
 
 .results-for {
-  padding: 20px;
-  padding-bottom: 0;
-  font-size: calc(14px + 0.5vw);
-  font-weight: bold;
+	padding: 20px;
+	padding-bottom: 0;
+	font-size: calc(14px + 0.5vw);
+	font-weight: bold;
+	word-wrap: break-word;
+}
+
+a {
+	text-decoration: none;
 }

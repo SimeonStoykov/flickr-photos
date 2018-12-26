@@ -3,10 +3,12 @@ import PhotoSearchBar from '../photo/PhotoSearchBar';
 import history from '../app/history';
 import './Header.css';
 
+const HOME_PATH = '/';
+
 const Header = ({ currentPath }) => {
 	function loadHomePage() {
-		if (currentPath !== '/') {
-			history.push('/');
+		if (currentPath !== HOME_PATH) {
+			history.push(HOME_PATH);
 		} else {
 			window.location.reload();
 		}

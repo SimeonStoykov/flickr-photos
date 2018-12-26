@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header should render banner text correctly with given currentPath 1`] = `
+exports[`Header should render header correctly with given currentPath 1`] = `
 <header
   className="header"
 >
@@ -14,7 +14,7 @@ exports[`Header should render banner text correctly with given currentPath 1`] =
 </header>
 `;
 
-exports[`Header should render correctly with no props 1`] = `
+exports[`Header should render header correctly with no props 1`] = `
 <header
   className="header"
 >

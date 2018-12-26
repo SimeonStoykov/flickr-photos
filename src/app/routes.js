@@ -7,8 +7,7 @@ export default () => {
 	return (
 		<Router basename={process.env.PUBLIC_URL} history={history}>
 			<Switch>
-				<Route exact path="/" component={App} />} />
-				{/* <Route path="/asset/:id" render={routeProps => <AssetDetails {...routeProps} />} /> */}
+				<Route exact path="/" component={App} />
 			</Switch>
 		</Router>
 	);

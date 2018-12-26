@@ -41,7 +41,7 @@ export class PhotoList extends Component {
 			<main>
 				{searchTerm && photos.length > 0 && !fetchPhotosLoading && <div className="results-for">Results for "{searchTerm}"</div>}
 				<div className="photos-list">
-					{photos.length === 0 && !fetchPhotosLoading ? <div className="photo-list--no-results">No results found for {searchTerm}</div> : ''}
+					{photos.length === 0 && !fetchPhotosLoading ? <div className="photo-list--no-results">No results found for "{searchTerm}"</div> : ''}
 					{
 						photos.map(photo => (
 							<LazyLoad key={photo.id} height={300}>

@@ -4,9 +4,19 @@ import '../setupTests';
 import { PhotoSearchBar } from './PhotoSearchBar';
 
 describe('Photo Search Bar', () => {
-    it('should render correctly with no props', () => {
-        const component = shallow(<PhotoSearchBar />);
+    let component;
+    const mockSetSearchInputValueFn = jest.fn();
 
+    beforeEach(() => {
+        component = shallow(<PhotoSearchBar setSearchInputValue={mockSetSearchInputValueFn} />)
+    });
+
+    it('should render search bar correctly', () => {
         expect(component).toMatchSnapshot();
+    });
+
+    it('should call setSearchInputValue on input value change', () => {
+        component.find('input[type="text"]').simulate('change', { target: { value: 'cats' } });
+        expect(mockSetSearchInputValueFn).toHaveBeenCalled();
     });
 });
