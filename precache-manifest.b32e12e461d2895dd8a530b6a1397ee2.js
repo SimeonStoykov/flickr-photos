@@ -16,19 +16,19 @@ self.__precacheManifest = [
     "url": "/flickr-photos/static/js/runtime~main.07247446.js"
   },
   {
-    "revision": "069b4480f7df62db54a6",
-    "url": "/flickr-photos/static/js/main.069b4480.chunk.js"
+    "revision": "70058ce34f7a070e3d82",
+    "url": "/flickr-photos/static/js/main.70058ce3.chunk.js"
   },
   {
     "revision": "19ae7b2a885ef679d1d2",
     "url": "/flickr-photos/static/js/1.19ae7b2a.chunk.js"
   },
   {
-    "revision": "069b4480f7df62db54a6",
+    "revision": "70058ce34f7a070e3d82",
     "url": "/flickr-photos/static/css/main.cffbaab0.chunk.css"
   },
   {
-    "revision": "6d168c8904c4c5c0cf64871c13a1223b",
+    "revision": "663c5baad6bc6582cd9ce99533d130f1",
     "url": "/flickr-photos/index.html"
   }
 ];
