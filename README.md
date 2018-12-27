@@ -1,5 +1,6 @@
 # flickr-photos
-Web application that displays Flickr photos. 
+Web application that displays Flickr photos.
+It uses the **[flickr.photos.search](https://www.flickr.com/services/api/flickr.photos.search.html)** API method for fetching photos.
 It uses infinite scrolling for image loading. 
 You have the ability to search for photos by title, description and tags.
 There are unit tests, that test different screens and components.
